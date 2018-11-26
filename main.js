@@ -19,6 +19,31 @@ function addProfits() {
 
 // In which month did they sell the most cars ?
 
+let monthCounter =[]
+
+function getDates() {
+  return fetch("http://localhost:8088/carSales")
+    .then(response => response.json())
+    .then(cars => cars.forEach(car => {
+      monthCounter.push(parseInt(car.purchase_date.split("-")[1]))
+      monthCounter.sort((a,b)=> a -b)
+      // console.log(monthCounter)
+    }))
+    .then(x =>
+      filterMonths())
+  }
+  getDates()
+
+function filterMonths() {
+  let months = {}
+   monthCounter.forEach( (month) => {
+    months[month] = (months[month] || 0) + 1
+  }) 
+  console.log(months)  //{1: 5, 2: 2, 3: 8, 4: 5, 5: 3, 6: 10, 7: 4, 8: 4, 9: 6, 11: 9, 12: 5}  June has the most with 10
+  console.log("June sold the most cars with 10", months)
+
+
+}
 
 // Which salesperson sold the most cars ?
 
